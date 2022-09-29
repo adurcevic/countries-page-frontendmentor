@@ -1,0 +1,21 @@
+:root {
+  --font-primary: "Nunito Sans", sans-serif;
+  --background-primary: #fafafa;
+  --header-primary: #ffffff;
+  --border-color: #c8c8c8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: var(--font-primary);
+}
+
+button {
+  border: none;
+}

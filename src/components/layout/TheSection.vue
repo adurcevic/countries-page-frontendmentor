@@ -13,7 +13,10 @@
 .section {
   background-color: var(--background-primary);
   width: 100%;
-  height: 500px;
   box-shadow: 0 -1px 2px 1px var(--border-color);
+}
+
+.section__inner {
+  padding: 24px;
 }
 </style>

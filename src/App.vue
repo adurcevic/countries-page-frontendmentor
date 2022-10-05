@@ -1,11 +1,11 @@
 <script setup>
 import TheHeader from "./components/layout/TheHeader.vue";
-import TheSection from "./components/layout/TheSection.vue";
+import HomePage from "./pages/HomePage.vue";
 </script>
 
 <template>
   <the-header></the-header>
-  <the-section></the-section>
+  <home-page></home-page>
 </template>
 
 <style></style>

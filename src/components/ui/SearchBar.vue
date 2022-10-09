@@ -18,12 +18,14 @@ const emit = defineEmits([
 
 const focusInput = () => {
   refInput.value.focus();
+  console.log("wtf");
 };
 
 const clearInput = () => {
   emit("clear-search-result");
   inputValue.value = "";
   localStorage.removeItem("search-input");
+  console.log("clear");
 };
 
 const searchResult = (e) => {
@@ -41,7 +43,7 @@ const ariaText = computed(() => {
 });
 
 const btnAction = computed(() =>
-  !inputValue.value.length ? focusInput() : clearInput()
+  !inputValue.value.length ? focusInput : clearInput
 );
 </script>
 <template lang="">

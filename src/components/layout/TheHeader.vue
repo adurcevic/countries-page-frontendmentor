@@ -1,79 +1,91 @@
 <script setup>
-import { ref, computed } from "vue";
-const lightTheme = ref(true);
-
+import { computed, toRefs } from "vue";
+const props = defineProps({
+  theme: {
+    type: Boolean,
+    required: true,
+  },
+});
+const emits = defineEmits(["change-theme"]);
+const { theme } = toRefs(props);
 const themeTxt = computed(() => {
-  if (lightTheme.value) return "light";
+  if (!theme.value) return "light";
   return "dark";
 });
-
-const changeTheme = () => {
-  lightTheme.value = !lightTheme.value;
-};
 </script>
 <template lang="">
   <header class="header">
-    <h1>Where in the world?</h1>
-    <div class="wrapper__theme">
-      <button
-        title="Toggles light and dark theme"
-        class="btn__theme"
-        :aria-label="themeTxt"
-        aria-live="polite"
-        @click="changeTheme"
-      >
+    <div class="header__inner">
+      <h1>Where in the world?</h1>
+      <div class="wrapper__theme">
+        <button
+          title="Toggles light and dark theme"
+          class="btn__theme"
+          :aria-label="themeTxt"
+          aria-live="polite"
+          @click="emits('change-theme')"
+        >
+          <transition name="theme" mode="out-in">
+            <svg
+              v-if="theme"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="moon-icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+              />
+            </svg>
+            <svg
+              v-else
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="sun-icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+              />
+            </svg>
+          </transition>
+        </button>
         <transition name="theme" mode="out-in">
-          <svg
-            v-if="lightTheme"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
-            />
-          </svg>
-          <svg
-            v-else
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-            />
-          </svg>
+          <span v-if="theme" class="txt__theme">Light Mode</span>
+          <span v-else class="txt__theme">Dark Mode</span>
         </transition>
-      </button>
-      <transition name="theme" mode="out-in">
-        <span v-if="lightTheme" class="txt__theme">Light Mode</span>
-        <span v-else class="txt__theme">Dark Mode</span>
-      </transition>
+      </div>
     </div>
   </header>
 </template>
-<style lang="css">
+<style scoped>
 .header {
   width: 100%;
   height: 100px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-left: 48px;
-  padding-right: 48px;
+  justify-content: center;
   background-color: var(--color-primary);
+}
+.header__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 24px;
 }
 .wrapper__theme {
   display: flex;
@@ -92,15 +104,29 @@ const changeTheme = () => {
   cursor: pointer;
 }
 
+.moon-icon,
+.sun-icon {
+  stroke: var(--text-primary);
+}
+
 .txt__theme {
   font-size: 1.6rem;
 }
 
 .theme-enter-active {
-  animation: fade 0.3s ease-out;
+  animation: fade 0.2s ease-out;
 }
 
 .theme-leave-active {
-  animation: fade 0.3s ease-in reverse;
+  animation: fade 0.2s ease-in reverse;
+}
+
+@media (min-width: 481px) {
+  .header__inner {
+    flex-direction: row;
+    gap: 0;
+    justify-content: space-between;
+    padding: 0 42px;
+  }
 }
 </style>

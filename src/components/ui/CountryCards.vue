@@ -1,4 +1,5 @@
 <script setup>
+// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   imgLink: {
     required: true,
@@ -6,7 +7,7 @@ const props = defineProps({
   },
   population: {
     required: true,
-    type: Number,
+    type: String,
   },
   capital: {
     type: String,
@@ -23,32 +24,40 @@ const props = defineProps({
 });
 </script>
 <template>
-  <li class="card">
-    <figure class="card__figure">
-      <img class="card__img" alt="" :src="props.imgLink" />
-    </figure>
-    <div class="card__content">
-      <h3 class="card__title">{{ props.countryName }}</h3>
-      <ul class="card__description">
-        <li>
-          <span class="property-title">Population: </span> {{ props.population
-          }}<span></span>
-        </li>
-        <li>
-          <span class="property-title">Region: </span
-          ><span>{{ props.region }}</span>
-        </li>
-        <li>
-          <span class="property-title">Capital: </span
-          ><span> {{ props.capital }}</span>
-        </li>
-      </ul>
-    </div>
-  </li>
+  <router-link
+    :to="'/countries/' + props.countryName.toLowerCase().replaceAll(' ', '')"
+  >
+    <li class="card">
+      <figure class="card__figure">
+        <img class="card__img" alt="" :src="imgLink" />
+      </figure>
+      <div class="card__content">
+        <div class="card__title">{{ countryName }}</div>
+        <ul class="card__description">
+          <li>
+            <span class="property-title">Population: </span
+            ><span> {{ population }}</span>
+          </li>
+          <li>
+            <span class="property-title">Region: </span
+            ><span>{{ region }}</span>
+          </li>
+          <li>
+            <span class="property-title">Capital: </span
+            ><span> {{ capital }}</span>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </router-link>
 </template>
-<style>
+<style scoped>
+a {
+  display: grid;
+}
+
 .card {
-  max-width: 300px;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
   background-color: var(--color-primary);
@@ -58,7 +67,7 @@ const props = defineProps({
 }
 
 .card__figure {
-  max-width: 300px;
+  width: 100%;
   height: 200px;
   margin-bottom: 24px;
 }

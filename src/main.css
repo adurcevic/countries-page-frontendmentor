@@ -3,6 +3,14 @@
   --background-primary: #fafafa;
   --color-primary: #ffffff;
   --border-color: #c8c8c8;
+  --text-primary: #000000;
+}
+
+[theme="custom-dark"] {
+  --background-primary: #202c37;
+  --color-primary: #2b3945;
+  --border-color: #1d2832;
+  --text-primary: #ffffff;
 }
 
 * {
@@ -11,9 +19,19 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
 html {
   font-size: 62.5%;
   font-family: var(--font-primary);
+  color: var(--text-primary);
+}
+
+body {
+  min-height: 100vh;
 }
 
 button {

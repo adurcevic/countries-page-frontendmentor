@@ -4,26 +4,33 @@ import { ref, computed } from "vue";
 const refInput = ref(null);
 const inputValue = ref("");
 
+const emit = defineEmits(["search-item", "clear-search-result"]);
+
 const focusInput = () => {
   refInput.value.focus();
 };
 
 const clearInput = () => {
+  emit("clear-search-result");
   inputValue.value = "";
+};
+
+const searchResult = (e) => {
+  emit("search-item", e.target.value);
 };
 
 const ariaText = computed(() => {
   if (inputValue.value.length) return "clear input";
   return "focus input";
 });
+
+const btnAction = computed(() =>
+  !inputValue.value.length ? focusInput() : clearInput()
+);
 </script>
 <template lang="">
   <div class="search-bar">
-    <button
-      class="icon__btn"
-      :aria-label="ariaText"
-      @click="!inputValue.length ? focusInput() : clearInput()"
-    >
+    <button class="icon__btn" :aria-label="ariaText" @click="btnAction">
       <svg
         v-if="!inputValue.length"
         aria-hidden="true"
@@ -32,7 +39,7 @@ const ariaText = computed(() => {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="w-6 h-6"
+        class="search-icon"
       >
         <path
           stroke-linecap="round"
@@ -48,7 +55,7 @@ const ariaText = computed(() => {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="w-6 h-6"
+        class="close-icon"
       >
         <path
           stroke-linecap="round"
@@ -63,11 +70,13 @@ const ariaText = computed(() => {
       class="search__input"
       type="text"
       placeholder="Search for a country..."
+      @keyup="searchResult"
     />
   </div>
 </template>
-<style>
+<style scoped>
 .search-bar {
+  width: 100%;
   max-width: 350px;
   padding: 12px 24px;
   display: flex;
@@ -89,9 +98,16 @@ const ariaText = computed(() => {
   cursor: pointer;
 }
 
+.search-icon,
+.close-icon {
+  stroke: var(--text-primary);
+}
+
 .search__input {
   border: none;
   width: 100%;
   font-size: 1.6rem;
+  background-color: transparent;
+  color: var(--text-primary);
 }
 </style>

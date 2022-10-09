@@ -8,13 +8,3 @@ export const getAllCountries = () => {
     return res.json();
   });
 };
-
-// export const getCountiresByRegion = (region) => {
-//   return fetch(`${countriesUrl}/vX/region/${region}`).then((res) => {
-//     if (!res.ok) {
-//       throw res;
-//     }
-
-//     return res.json();
-//   });
-// };

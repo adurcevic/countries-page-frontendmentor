@@ -1,8 +1,5 @@
 <script setup>
-import TheSection from "../components/layout/TheSection.vue";
-import TheMain from "../components/layout/TheMain.vue";
 import CountryContent from "../components/ui/CountryContent.vue";
-import WrongRequest from "../components/ui/WrongRequest.vue";
 import { useCountryStore } from "../stores/CountryStore";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
@@ -17,23 +14,22 @@ const store = useCountryStore();
 const { areCountriesFetched } = storeToRefs(store);
 const { findCountry, searchBorderCountries } = store;
 
-if (areCountriesFetched.value) {
-  const reqCountry = findCountry(route.params.countryName);
-  country.value = reqCountry;
-  searchBorderCountries(country.value.borders);
+const initCountryPage = () => {
+  country.value = findCountry(route.params.countryName);
+  country.value && searchBorderCountries(country.value.borders);
   param.value = route.params.countryName;
+};
+
+if (areCountriesFetched.value) {
+  initCountryPage();
 } else {
   watch(areCountriesFetched, () => {
-    country.value = findCountry(route.params.countryName);
-    country.value && searchBorderCountries(country.value.borders);
-    param.value = route.params.countryName;
+    initCountryPage();
   });
 }
 
 watch(route, () => {
-  country.value = findCountry(route.params.countryName);
-  searchBorderCountries(country.value.borders);
-  param.value = route.params.countryName;
+  initCountryPage();
 });
 </script>
 <template lang="">
@@ -57,17 +53,21 @@ watch(route, () => {
         </button>
       </div>
       <template #content>
-        <country-content v-if="country" :country="country"></country-content>
+        <country-content v-if="country" :country="country" />
         <div v-if="areCountriesFetched && !country" class="error-txt">
           <wrong-request text="There is no country with name" :result="param" />
         </div>
+        <circle-spinner v-if="!areCountriesFetched" />
       </template>
     </the-section>
   </the-main>
 </template>
 <style scoped>
 .error-txt {
-  margin-top: 32px;
+  margin-top: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-return {

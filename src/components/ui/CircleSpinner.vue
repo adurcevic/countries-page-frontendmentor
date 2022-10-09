@@ -1,87 +1,39 @@
 <template lang="">
-  <div class="spinner-positioner">
-    <span class="loader"></span>
+  <div class="spinner__wrapper">
+    <div class="lds-dual-ring"></div>
   </div>
 </template>
 <script>
 export default {};
 </script>
 <style scoped>
-.spinner-positioner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.spinner__wrapper {
+  margin-top: 64px;
+  display: grid;
+  place-items: center;
 }
-.loader {
-  transform: rotateZ(45deg);
-  perspective: 1000px;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  color: var(--text-primary);
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
 }
-.loader:before,
-.loader:after {
-  content: "";
+.lds-dual-ring:after {
+  content: " ";
   display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: inherit;
-  height: inherit;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
   border-radius: 50%;
-  transform: rotateX(70deg);
-  animation: 1s spin linear infinite;
+  border: 6px solid var(--text-primary);
+  border-color: var(--text-primary) transparent var(--text-primary) transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
 }
-.loader:after {
-  color: #ff3d00;
-  transform: rotateY(70deg);
-  animation-delay: 0.4s;
-}
-
-@keyframes rotate {
+@keyframes lds-dual-ring {
   0% {
-    transform: translate(-50%, -50%) rotateZ(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    transform: translate(-50%, -50%) rotateZ(360deg);
-  }
-}
-
-@keyframes rotateccw {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(-360deg);
-  }
-}
-
-@keyframes spin {
-  0%,
-  100% {
-    box-shadow: 0.2em 0px 0 0px currentcolor;
-  }
-  12% {
-    box-shadow: 0.2em 0.2em 0 0 currentcolor;
-  }
-  25% {
-    box-shadow: 0 0.2em 0 0px currentcolor;
-  }
-  37% {
-    box-shadow: -0.2em 0.2em 0 0 currentcolor;
-  }
-  50% {
-    box-shadow: -0.2em 0 0 0 currentcolor;
-  }
-  62% {
-    box-shadow: -0.2em -0.2em 0 0 currentcolor;
-  }
-  75% {
-    box-shadow: 0px -0.2em 0 0 currentcolor;
-  }
-  87% {
-    box-shadow: 0.2em -0.2em 0 0 currentcolor;
+    transform: rotate(360deg);
   }
 }
 </style>

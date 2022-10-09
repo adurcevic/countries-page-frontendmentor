@@ -1,7 +1,7 @@
 <script setup>
 import { useDark, useToggle } from "@vueuse/core";
 import TheHeader from "./components/layout/TheHeader.vue";
-import { onBeforeMount } from "vue";
+import { onBeforeMount, onUnmounted } from "vue";
 import { useCountryStore } from "./stores/CountryStore";
 import { getAllCountries } from "./api/countires";
 
@@ -18,6 +18,7 @@ const fetchCountries = async () => {
 };
 
 onBeforeMount(fetchCountries);
+onUnmounted(localStorage.removeItem("search-input"));
 
 const isDark = useDark({
   slector: "html",

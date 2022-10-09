@@ -1,15 +1,13 @@
 <script setup>
-import TheSection from "../components/layout/TheSection.vue";
 import SearchBar from "../components/ui/SearchBar.vue";
 import FilterOptions from "../components/ui/FilterOptions.vue";
 import CountryCards from "../components/ui/CountryCards.vue";
-import CircleSpinner from "../components/ui/CircleSpinner.vue";
-import TheMain from "../components/layout/TheMain.vue";
-import WrongRequest from "../components/ui/WrongRequest.vue";
 import { ref } from "vue";
 import { useCountryStore } from "../stores/CountryStore";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const store = useCountryStore();
 const { countries } = storeToRefs(store);
 const { searchCountry } = store;
@@ -18,6 +16,13 @@ const searchResult = ref("");
 const handleSearch = (input) => {
   searchResult.value = input;
   searchCountry(input);
+};
+
+const goToResult = () => {
+  if (countries.value.length === 1) {
+    const country = countries.value[0];
+    router.push(`/countries/${country.name.common}`);
+  }
 };
 
 const handleClear = () => {
@@ -31,6 +36,7 @@ const handleClear = () => {
         <search-bar
           @clear-search-result="handleClear"
           @search-item="handleSearch"
+          @go-to-result="goToResult"
         ></search-bar>
         <filter-options></filter-options>
       </div>

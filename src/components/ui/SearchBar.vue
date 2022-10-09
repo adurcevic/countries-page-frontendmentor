@@ -4,7 +4,17 @@ import { ref, computed } from "vue";
 const refInput = ref(null);
 const inputValue = ref("");
 
-const emit = defineEmits(["search-item", "clear-search-result"]);
+const savedInput = localStorage.getItem("search-input");
+
+if (savedInput) {
+  inputValue.value = savedInput;
+}
+
+const emit = defineEmits([
+  "search-item",
+  "clear-search-result",
+  "go-to-result",
+]);
 
 const focusInput = () => {
   refInput.value.focus();
@@ -13,10 +23,16 @@ const focusInput = () => {
 const clearInput = () => {
   emit("clear-search-result");
   inputValue.value = "";
+  localStorage.removeItem("search-input");
 };
 
 const searchResult = (e) => {
   emit("search-item", e.target.value);
+  localStorage.setItem("search-input", e.target.value);
+};
+
+const goToResult = (e) => {
+  emit("go-to-result", e.target.value);
 };
 
 const ariaText = computed(() => {
@@ -71,6 +87,7 @@ const btnAction = computed(() =>
       type="text"
       placeholder="Search for a country..."
       @keyup="searchResult"
+      @keyup.enter="goToResult"
     />
   </div>
 </template>

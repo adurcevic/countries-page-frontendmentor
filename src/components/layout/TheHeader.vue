@@ -105,6 +105,7 @@ watch(route, () => {
 
 .header__title {
   font-size: 2.2rem;
+  font-weight: 800;
 }
 
 .btn__theme {

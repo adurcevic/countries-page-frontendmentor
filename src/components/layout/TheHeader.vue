@@ -29,7 +29,7 @@ watch(route, () => {
   <header class="header">
     <div class="header__inner">
       <h1 v-if="!isCountryPage" class="header__title">Where in the world?</h1>
-      <h2 v-else class="header__title">Where in the world?</h2>
+      <p v-else class="header__title">Where in the world?</p>
       <button
         title="Toggles light and dark theme"
         class="btn__theme"

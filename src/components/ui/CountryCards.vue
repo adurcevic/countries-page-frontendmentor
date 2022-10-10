@@ -29,7 +29,7 @@ const props = defineProps({
   >
     <li class="card">
       <figure class="card__figure">
-        <img class="card__img" alt="" :src="imgLink" />
+        <img class="card__img" :alt="countryName + ' flag'" :src="imgLink" />
       </figure>
       <div class="card__content">
         <div class="card__title">{{ countryName }}</div>
@@ -60,7 +60,6 @@ a {
 a:hover {
   transform: scale(1.05);
 }
-
 .card {
   max-width: 350px;
   display: flex;

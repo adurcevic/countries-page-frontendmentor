@@ -19,30 +19,29 @@ const closeDropdown = () => {
 </script>
 <template lang="">
   <div class="filter__container" @mouseleave="closeDropdown">
-    <div class="select-region">
-      <button
-        class="btn-dropdown"
-        aria-controls="regions"
-        :aria-extended="isDropdownVisible.active"
-        @click="toggleDropdown"
+    <button
+      class="btn-dropdown select-region"
+      aria-controls="regions"
+      :aria-expanded="isDropdownVisible.active"
+      @click="toggleDropdown"
+    >
+      <span class="filter-txt"> Filter by Region </span>
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        :class="['arrow', { down: isDropdownVisible.active }]"
+        width="10"
+        height="6"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <span class="filter-txt"> Filter by Region </span>
-        <svg
-          aria-hidden="true"
-          :class="['arrow', { down: isDropdownVisible.active }]"
-          width="10"
-          height="6"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke="#000000"
-            stroke-width="1.5"
-            fill="none"
-            d="m1 1 4 4 4-4"
-          />
-        </svg>
-      </button>
-    </div>
+        <path
+          stroke="#000000"
+          stroke-width="1.5"
+          fill="none"
+          d="m1 1 4 4 4-4"
+        />
+      </svg>
+    </button>
     <div aria-hidden="true" class="spacing-div"></div>
     <transition name="region">
       <ul v-if="isDropdownVisible.active" id="regions">
@@ -92,9 +91,15 @@ const closeDropdown = () => {
 .btn-dropdown {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 24px;
   color: var(--text-primary);
+  width: 100%;
+  padding: 15px 24px;
+  background-color: var(--color-primary);
+  box-shadow: 0 1px 2px 1px var(--border-color);
+  border-radius: 4px;
+  font-size: 1.6rem;
 }
 
 .filter-txt {

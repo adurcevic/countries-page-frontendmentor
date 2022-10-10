@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { getAllCountries } from "../api/countires";
 
 export const useCountryStore = defineStore("CountryStore", () => {
   const countries = ref(null);
@@ -8,9 +9,17 @@ export const useCountryStore = defineStore("CountryStore", () => {
   const areCountriesFetched = ref(false);
   const borderCountriesName = ref([]);
 
-  function fill(arr) {
-    countries.value = allCountries.value = searchedCountryArr.value = [...arr];
-    areCountriesFetched.value = true;
+  async function fetchCountries() {
+    try {
+      const res = await getAllCountries();
+      countries.value =
+        allCountries.value =
+        searchedCountryArr.value =
+          [...res];
+      areCountriesFetched.value = true;
+    } catch (err) {
+      console.error(err.message);
+    }
   }
 
   function searchBorderCountries(borderCountries) {
@@ -53,12 +62,12 @@ export const useCountryStore = defineStore("CountryStore", () => {
 
   return {
     countries,
-    fill,
     filterByRegion,
     searchCountry,
     findCountry,
     areCountriesFetched,
     borderCountriesName,
     searchBorderCountries,
+    fetchCountries,
   };
 });

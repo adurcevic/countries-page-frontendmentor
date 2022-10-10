@@ -37,8 +37,8 @@ const handleClear = () => {
           @clear-search-result="handleClear"
           @search-item="handleSearch"
           @go-to-result="goToResult"
-        ></search-bar>
-        <filter-options></filter-options>
+        />
+        <filter-options />
       </div>
       <template #content>
         <circle-spinner v-if="!countries" />
@@ -51,13 +51,13 @@ const handleClear = () => {
             :region="country.region"
             :capital="country.capital ? country.capital[0] : 'No capital city'"
             :population="country.population.toLocaleString('en-US')"
-          ></country-cards>
+          />
         </ul>
         <wrong-request
           v-if="countries && !countries.length"
           text="No result found for"
           :result="searchResult"
-        ></wrong-request>
+        />
       </template>
     </the-section>
   </the-main>

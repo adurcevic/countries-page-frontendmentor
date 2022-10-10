@@ -3,19 +3,9 @@ import { useDark, useToggle } from "@vueuse/core";
 import TheHeader from "./components/layout/TheHeader.vue";
 import { onBeforeMount, onUnmounted } from "vue";
 import { useCountryStore } from "./stores/CountryStore";
-import { getAllCountries } from "./api/countires";
 
 const store = useCountryStore();
-const { fill } = store;
-
-const fetchCountries = async () => {
-  try {
-    const res = await getAllCountries();
-    fill(res);
-  } catch (err) {
-    console.error(err.message);
-  }
-};
+const { fetchCountries } = store;
 
 onBeforeMount(fetchCountries);
 onUnmounted(localStorage.removeItem("search-input"));

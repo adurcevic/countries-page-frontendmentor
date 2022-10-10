@@ -26,11 +26,11 @@ const countryCapital = computed(() =>
 <template>
   <div class="country__section">
     <figure>
-      <img :src="country.flags.png" />
+      <img :src="country.flags.png" :alt="country.name.common + ' flag'" />
     </figure>
     <div class="country__content">
       <div class="country__content-inner">
-        <h2 class="content__title">{{ country.name.common }}</h2>
+        <h1 class="content__title">{{ country.name.common }}</h1>
         <div class="content__positioner">
           <div class="content__block-primary">
             <p v-if="country.name.nativeName" class="content__property">

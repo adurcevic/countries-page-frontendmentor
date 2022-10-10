@@ -1,34 +1,48 @@
 <script setup>
-import { computed, toRefs } from "vue";
+import { useRoute } from "vue-router";
+import { computed, toRefs, ref, watch } from "vue";
+
 const props = defineProps({
   theme: {
     type: Boolean,
     required: true,
   },
 });
+const route = useRoute();
+const isCountryPage = ref(false);
 const emits = defineEmits(["change-theme"]);
 const { theme } = toRefs(props);
 const themeTxt = computed(() => {
   if (!theme.value) return "light";
   return "dark";
 });
+
+watch(route, () => {
+  if (route.params.countryName) {
+    isCountryPage.value = true;
+  } else {
+    isCountryPage.value = false;
+  }
+});
 </script>
 <template lang="">
   <header class="header">
     <div class="header__inner">
-      <h1>Where in the world?</h1>
-      <div class="wrapper__theme">
-        <button
-          title="Toggles light and dark theme"
-          class="btn__theme"
-          :aria-label="themeTxt"
-          aria-live="polite"
-          @click="emits('change-theme')"
-        >
+      <h1 v-if="!isCountryPage" class="header__title">Where in the world?</h1>
+      <h2 v-else class="header__title">Where in the world?</h2>
+      <button
+        title="Toggles light and dark theme"
+        class="btn__theme"
+        :aria-label="themeTxt"
+        aria-live="polite"
+        @click="emits('change-theme')"
+      >
+        <span class="icon-wrapper">
           <transition name="theme" mode="out-in">
             <svg
               v-if="theme"
               aria-hidden="true"
+              focusable="false"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -45,6 +59,7 @@ const themeTxt = computed(() => {
             <svg
               v-else
               aria-hidden="true"
+              focusable="false"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -59,12 +74,12 @@ const themeTxt = computed(() => {
               />
             </svg>
           </transition>
-        </button>
+        </span>
         <transition name="theme" mode="out-in">
           <span v-if="theme" class="txt__theme">Light Mode</span>
           <span v-else class="txt__theme">Dark Mode</span>
         </transition>
-      </div>
+      </button>
     </div>
   </header>
 </template>
@@ -87,26 +102,32 @@ const themeTxt = computed(() => {
   max-width: 1400px;
   padding: 0 24px;
 }
-.wrapper__theme {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+
+.header__title {
+  font-size: 2.2rem;
 }
 
 .btn__theme {
-  height: 24px;
-  width: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent;
   cursor: pointer;
-  transition: transform 0.3s ease-in;
+  gap: 12px;
+  transition: transform 0.2s ease-in;
+  color: var(--text-primary);
 }
 
 .btn__theme:hover {
-  transform: scale(1.2);
+  transform: scale(1.05);
+}
+
+.icon-wrapper {
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .moon-icon,
@@ -116,6 +137,7 @@ const themeTxt = computed(() => {
 
 .txt__theme {
   font-size: 1.6rem;
+  font-family: var(--font-primary);
 }
 
 .theme-enter-active {

@@ -54,6 +54,11 @@ const props = defineProps({
 <style scoped>
 a {
   display: grid;
+  transition: transform 0.3s ease-in-out;
+}
+
+a:hover {
+  transform: scale(1.05);
 }
 
 .card {

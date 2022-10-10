@@ -102,6 +102,11 @@ const themeTxt = computed(() => {
   justify-content: center;
   background-color: transparent;
   cursor: pointer;
+  transition: transform 0.3s ease-in;
+}
+
+.btn__theme:hover {
+  transform: scale(1.2);
 }
 
 .moon-icon,

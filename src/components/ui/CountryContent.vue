@@ -175,6 +175,11 @@ img {
   box-shadow: 0 2px 4px 2px var(--border-color);
   border-radius: 4px;
   background-color: var(--color-primary);
+  transition: transfrom 0.3s ease-in;
+}
+
+.content__footer span:hover {
+  transform: scale(1.05);
 }
 
 @media (min-width: 725px) {

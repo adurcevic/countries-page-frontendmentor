@@ -9,12 +9,10 @@ const isDropdownVisible = ref({ active: false });
 
 const toggleDropdown = () => {
   isDropdownVisible.value.active = !isDropdownVisible.value.active;
-  console.log(isDropdownVisible.value);
 };
 
 const closeDropdown = () => {
   isDropdownVisible.value.active = false;
-  console.log("trigger close");
 };
 </script>
 <template lang="">

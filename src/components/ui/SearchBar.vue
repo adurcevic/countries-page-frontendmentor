@@ -18,14 +18,12 @@ const emit = defineEmits([
 
 const focusInput = () => {
   refInput.value.focus();
-  console.log("wtf");
 };
 
 const clearInput = () => {
   emit("clear-search-result");
   inputValue.value = "";
   localStorage.removeItem("search-input");
-  console.log("clear");
 };
 
 const searchResult = (e) => {
